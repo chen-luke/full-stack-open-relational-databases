@@ -1,0 +1,13 @@
+# Get request test
+GET http://localhost:3001/api/notes
+
+###
+
+# Post request test
+POST http://localhost:3001/api/notes HTTP/1.1
+content-type: application/json
+
+{
+    "content": "Testing POST API",
+    "important": false
+}
