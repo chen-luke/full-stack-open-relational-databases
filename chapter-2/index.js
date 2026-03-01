@@ -40,7 +40,14 @@ app.get('/api/notes', async (req, res) => {
 
 app.post('/api/notes', async (req, res) => {
   console.log(req.body)
+  // Standard create method
   const note = await Note.create({...req.body, date:new Date()})
+
+  // Using build method allows us to edit the note before saving it instead of immediate creation
+  // const note = Note.build(req.body)
+  // note.important = true
+  // await note.save()  
+
   res.json(note)
 })
 
