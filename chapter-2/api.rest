@@ -11,3 +11,7 @@ content-type: application/json
     "content": "Testing POST API",
     "important": false
 }
+
+###
+
+GET http://localhost:3001/api/notes/1
