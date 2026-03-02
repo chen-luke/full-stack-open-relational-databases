@@ -30,6 +30,7 @@ router.get('/:id', blogFinder, async (req, res) => {
 
 router.put('/:id', blogFinder, async (req, res) => {
   req.blog.important = req.body.important
+  req.blog.likes = req.body.likes
   await req.blog.save()
   res.json(req.blog)
 })

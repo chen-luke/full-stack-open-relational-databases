@@ -7,9 +7,16 @@ const { connectToDatabase } = require('./util/db')
 
 const blogsRouter = require('./controllers/blogs')
 
+const { errorHandler } = require('./middleware/errorHandling')
+const { unknownEndpoint } = require('./middleware/unknownEndpoint')
+
 app.use(express.json())
 
 app.use('/api/blogs', blogsRouter)
+
+app.use(unknownEndpoint)
+
+app.use(errorHandler)
 
 const start = async () => {
   await connectToDatabase()
