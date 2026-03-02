@@ -1,0 +1,20 @@
+# Get request test
+GET http://localhost:3001/api/blogs
+
+###
+
+# Post request test
+POST http://localhost:3001/api/blogs HTTP/1.1
+content-type: application/json
+
+{
+    "author": "Luke C",
+    "url":"www.github.com",
+    "title":"I like github",
+    "likes": 0,
+    "date": null
+}
+
+###
+
+DELETE http://localhost:3001/api/blogs/3
