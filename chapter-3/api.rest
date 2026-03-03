@@ -8,10 +8,24 @@ POST http://localhost:3001/api/notes HTTP/1.1
 content-type: application/json
 
 {
-    "content": "Testing POST API",
+    "content": "Another note for Luke",
     "important": false
 }
 
 ###
 
 GET http://localhost:3001/api/notes/1
+
+###
+# Creating a user
+POST http://localhost:3001/api/users HTTP/1.1
+content-type: application/json
+
+{
+    "username": "Super",
+    "name": "Test User"
+}
+
+###
+# Getting all users
+GET http://localhost:3001/api/users
