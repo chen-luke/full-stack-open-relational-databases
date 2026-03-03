@@ -26,4 +26,4 @@ User.init({
   modelName: 'user'
 })
 
-module.exports = User
+module.exports = User 
