@@ -16,6 +16,17 @@ content-type: application/json
 }
 
 ###
+# Post request test error handler
+POST http://localhost:3001/api/blogs HTTP/1.1
+content-type: application/json
+
+{
+    "author": "Luke C",
+    "likes": 0,
+    "date": null
+}
+
+###
 # Delete test
 DELETE http://localhost:3001/api/blogs/4
 

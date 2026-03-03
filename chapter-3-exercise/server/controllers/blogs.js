@@ -15,12 +15,12 @@ router.get('/', async (req, res) => {
   res.json(blogs)
 })
 
-router.post('/', async (req, res) => {
+router.post('/', async (req, res, next) => {
   try {
     const blog = await Blog.create({... req.body, date: new Date()})
     res.json(blog)
   } catch(error) {
-    return res.status(400).json({ error })
+    next(error)
   }
 })
 
@@ -28,11 +28,15 @@ router.get('/:id', blogFinder, async (req, res) => {
   res.json(req.blog)
 })
 
-router.put('/:id', blogFinder, async (req, res) => {
-  req.blog.important = req.body.important
-  req.blog.likes = req.body.likes
+router.put('/:id', blogFinder, async (req, res, next) => {
+  try {
+    req.blog.likes = req.body.likes
   await req.blog.save()
-  res.json(req.blog)
+  res.json(req.blog)  
+  } catch (error) {
+    next(error)
+  }
+  
 })
 
 router.delete('/:id', blogFinder, async (req, res) => {
