@@ -1,14 +1,9 @@
 const errorHandler = (err, req, res, next) => {
-    console.error(err.message)
 
     if (err.name === 'SequelizeValidationError') {
-        return res.status(400).json({ error: err.message })
+        const errors = err.errors.map((error) => error.message) 
+        return res.status(400).json({ error: errors})
     }
-
-    if (err.name === 'UserNameIsNotEmail') {
-        return res.status(400).json({error: "Username should be a valid email address"})
-    }
-
     next(err)
 }
 
