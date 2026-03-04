@@ -19,11 +19,21 @@ User.init({
     type: DataTypes.STRING,
     allowNull: false
   },
+  passwordHash: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  }
 }, {
   sequelize,
   underscored: true,
-  timestamps: false,
   modelName: 'user'
 })
+
+// Strips out passwordHash when we call res.json(user) automatically
+User.prototype.toJSON = function() {
+  const values = { ...this.get() }
+  delete values.passwordHash
+  return values
+}
 
 module.exports = User
