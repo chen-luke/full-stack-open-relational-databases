@@ -23,7 +23,7 @@ router.get('/', async (req, res) => {
   res.json(users)
 })
 
-router.post('/', async (req, res) => {
+router.post('/', async (req, res, next) => {
   try {
     const {username, name, password}= req.body
 
@@ -38,7 +38,7 @@ router.post('/', async (req, res) => {
     })
     res.json(user)
   } catch(error) {
-    return res.status(400).json({ error })
+    next(error)
   }
 })
 

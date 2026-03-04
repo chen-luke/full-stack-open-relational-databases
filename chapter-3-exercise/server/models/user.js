@@ -14,7 +14,10 @@ User.init({
     type: DataTypes.STRING,
     unique: true,
     allowNull: false,
-    isEmail: true,
+    validate: {
+      isEmail: true
+    }
+
   },
   name: {
     type: DataTypes.STRING,
@@ -28,14 +31,6 @@ User.init({
   sequelize,
   underscored: true,
   modelName: 'user',
-    validate: {
-    isUserNameEmail() {
-      if (this.isEmail(this.username)) {
-        console.log('did this trigger?')
-        throw new Error('userNameIsNotEmail')
-      }
-    }
-  }
 })
 
 // Strips out passwordHash when we call res.json(user) automatically
