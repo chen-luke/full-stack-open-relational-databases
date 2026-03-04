@@ -13,7 +13,8 @@ User.init({
   username: {
     type: DataTypes.STRING,
     unique: true,
-    allowNull: false
+    allowNull: false,
+    isEmail: true,
   },
   name: {
     type: DataTypes.STRING,
@@ -26,7 +27,15 @@ User.init({
 }, {
   sequelize,
   underscored: true,
-  modelName: 'user'
+  modelName: 'user',
+    validate: {
+    isUserNameEmail() {
+      if (this.isEmail(this.username)) {
+        console.log('did this trigger?')
+        throw new Error('userNameIsNotEmail')
+      }
+    }
+  }
 })
 
 // Strips out passwordHash when we call res.json(user) automatically
@@ -36,4 +45,4 @@ User.prototype.toJSON = function() {
   return values
 }
 
-module.exports = User
+module.exports = User 

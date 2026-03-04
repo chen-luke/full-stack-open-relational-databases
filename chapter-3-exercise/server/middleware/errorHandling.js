@@ -5,6 +5,10 @@ const errorHandler = (err, req, res, next) => {
         return res.status(400).json({ error: err.message })
     }
 
+    if (err.name === 'UserNameIsNotEmail') {
+        return res.status(400).json({error: "Username should be a valid email address"})
+    }
+
     next(err)
 }
 
