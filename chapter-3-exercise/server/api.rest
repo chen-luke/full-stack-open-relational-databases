@@ -1,44 +1,16 @@
-# Get request test
-GET http://localhost:3001/api/blogs
+
 
 ###
+# get list of users
+GET http://localhost:3001/api/users
 
-# Post request test
-POST http://localhost:3001/api/blogs HTTP/1.1
+###
+# create a user test
+POST http://localhost:3001/api/users HTTP/1.1
 content-type: application/json
 
 {
-    "author": "Luke C",
-    "url":"www.github.com",
-    "title":"I like github",
-    "likes": 0,
-    "date": null
-}
-
-###
-# Post request test error handler
-POST http://localhost:3001/api/blogs HTTP/1.1
-content-type: application/json
-
-{
-    "author": "Luke C",
-    "likes": 0,
-    "date": null
-}
-
-###
-# Delete test
-DELETE http://localhost:3001/api/blogs/4
-
-###
-# Update test
-PUT http://localhost:3001/api/blogs/1 HTTP/1.1
-content-type: application/json
-
-{
-    "author": "Luke C",
-    "url":"www.github.com",
-    "title":"I like github",
-    "likes": 1012,
-    "date": null
+    "username":"Luke Test",
+    "name":"Luke C",
+    "password":"secret"
 }
