@@ -31,6 +31,9 @@ router.get('/', async (req, res) => {
     include: {
       model: User,
       attributes: ['name']
+    },
+    where: {
+      important: req.query.important === 'true'
     }
   })
   res.json(notes)
