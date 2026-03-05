@@ -26,7 +26,7 @@ content-type: application/json
 }
 
 ###
-# all blogs
+# getting blogs made by the user
 GET http://localhost:3001/api/blogs HTTP/1.1
 
 ###
@@ -36,8 +36,8 @@ content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNlY29uZEB0ZXN0LmNvbSIsImlkIjoyLCJpYXQiOjE3NzI2NzI2MzR9.WviG-hglrqq1NlafNeNx7nrQPhH2KKINX__fp5aUJn4
 
 {
-    "title":"Lisa Story",
-    "author":"Luke C",
+    "title":"Awesome Story 2",
+    "author":"Lisa C",
     "url":"www.lisa_c.dev/blog",
     "likes":300
 }
@@ -53,4 +53,17 @@ Authorization: Bearer eyJhbGciOiJIUzI1NkpXVCJ9.eyJ1c2VybmFtZSI6IlRlc3RAdGVzdC5jb
     "author":"Luke C",
     "url":"www.lukec.dev/blog",
     "likes":10000 
+}
+
+###
+# using search
+GET http://localhost:3001/api/blogs?search=Lisa HTTP/1.1
+
+###
+# update likes
+PUT http://localhost:3001/api/blogs/5 HTTP/1.1
+content-type: application/json
+
+{
+    "likes": 888
 }
