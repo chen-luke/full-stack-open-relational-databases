@@ -2,6 +2,7 @@ const router = require('express').Router()
 const jwt = require('jsonwebtoken')
 const { Blog, User } = require('../models')
 const {SECRET} = require('../util/config')
+const { restore } = require('../models/blog')
 
 
 const blogFinder = async (req, res, next) => {
@@ -62,9 +63,22 @@ router.put('/:id', blogFinder, async (req, res, next) => {
   
 })
 
-router.delete('/:id', blogFinder, async (req, res) => {
-  await req.blog.destroy()
-  res.status(204).end()
+router.delete('/:id', blogFinder, tokenExtractor, async (req, res, next) => {
+    try {
+      // use blogfinder to find the blog and check owner
+      // is current user
+      const isOwner = req.blog.userId === req.decodedToken.id
+    if (isOwner) {
+      await req.blog.destroy()
+      res.status(204).end()
+      
+    } else {
+      res.status(401).json({error: 'User is not the owner of the blog'})
+    }
+  } catch(error) {
+    next(error)
+  }
+
 })
 
 module.exports = router
