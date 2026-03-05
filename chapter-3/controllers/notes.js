@@ -27,12 +27,17 @@ const tokenExtractor = (req, res, next) => {
 }
 
 router.get('/', async (req, res) => {
-  // if no query parameter, return both true and false importance note.
-  let important = {[Op.in]: [true, false]}
-  // else
+  const where = {}
+
   if (req.query.important) {
-    important = req.query.important === 'true'
+    where.important = req.query.important === 'true'
   }
+
+  if (req.query.search) {
+    where.content = {
+      [Op.substring]: req.query.search
+    }
+  } 
 
   const notes = await Note.findAll({
     attributes: {exclude: ['userId']},
@@ -40,9 +45,7 @@ router.get('/', async (req, res) => {
       model: User,
       attributes: ['name']
     },
-    where: {
-      important
-    }
+    where
   })
   res.json(notes)
 })
