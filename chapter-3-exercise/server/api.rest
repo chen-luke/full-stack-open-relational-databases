@@ -67,3 +67,9 @@ content-type: application/json
 {
     "likes": 888
 }
+
+###
+POST http://localhost:3001/api/reset HTTP/1.1
+content-type: application/json
+
+{}
