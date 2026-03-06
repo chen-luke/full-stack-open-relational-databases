@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "start": "nodex index.js",
     "dev": "nodemon index.js",
     "test": "node --test --test-concurrency=1 tests/api_ch3.test.js"
   },
