@@ -22,10 +22,22 @@ POST http://localhost:3001/api/users HTTP/1.1
 content-type: application/json
 
 {
-    "username": "Super",
-    "name": "Test User"
+    "username": "Pope-w",
+    "name": "Pope W"
 }
 
 ###
 # Getting all users
 GET http://localhost:3001/api/users
+
+
+###
+# Login blocking test
+
+POST http://localhost:3001/api/login HTTP/1.1
+content-type: application/json
+
+{
+    "username": "Pope-w",
+    "password": "secret"
+}
