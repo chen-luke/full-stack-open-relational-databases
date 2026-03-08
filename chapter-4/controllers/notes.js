@@ -1,27 +1,14 @@
 const router = require('express').Router()
 const jwt = require('jsonwebtoken')
-const {SECRET} = require('../util/config')
+const { SECRET } = require('../util/config')
 const { Note, User } = require('../models')
-const {Op} = require('sequelize')
+const { Op } = require('sequelize')
+const { tokenExtractor } = require('../util/middleware')
 
 const noteFinder = async (req, res, next) => {
-    req.note = await Note.findByPk(req.params.id)
-    if (!req.note) {
-        return res.status(404).end()
-    }
-    next()
-}
-
-const tokenExtractor = (req, res, next) => {
-  const authorization = req.get('authorization')
-  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
-    try {
-      req.decodedToken = jwt.verify(authorization.substring(7), SECRET)
-    } catch{
-      return res.status(401).json({ error: 'token invalid' })
-    }
-  }  else {
-    return res.status(401).json({ error: 'token missing' })
+  req.note = await Note.findByPk(req.params.id)
+  if (!req.note) {
+    return res.status(404).end()
   }
   next()
 }
@@ -37,10 +24,10 @@ router.get('/', async (req, res) => {
     where.content = {
       [Op.substring]: req.query.search
     }
-  } 
+  }
 
   const notes = await Note.findAll({
-    attributes: {exclude: ['userId']},
+    attributes: { exclude: ['userId'] },
     include: {
       model: User,
       attributes: ['name']
@@ -53,9 +40,9 @@ router.get('/', async (req, res) => {
 router.post('/', tokenExtractor, async (req, res) => {
   try {
     const user = await User.findByPk(req.decodedToken.id)
-    const note = await Note.create({... req.body, date: new Date(), userId: user.id})
+    const note = await Note.create({ ...req.body, date: new Date(), userId: user.id })
     res.json(note)
-  } catch(error) {
+  } catch (error) {
     return res.status(400).json({ error })
   }
 })

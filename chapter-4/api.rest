@@ -32,7 +32,7 @@ GET http://localhost:3001/api/users
 
 
 ###
-# Login blocking test
+# Login blocking test, before testing the user should be disabled in the backend
 
 POST http://localhost:3001/api/login HTTP/1.1
 content-type: application/json
@@ -40,4 +40,26 @@ content-type: application/json
 {
     "username": "Pope-w",
     "password": "secret"
+}
+
+###
+# Login as Admin
+
+POST http://localhost:3001/api/login HTTP/1.1
+content-type: application/json
+
+{
+    "username": "luke-c",
+    "password": "secret"
+}
+
+###
+# Enable disabled user as Admin
+
+PUT http://localhost:3001/api/users/Pope-w HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imx1a2UtYyIsImlkIjoxLCJpYXQiOjE3NzI5OTc1Nzl9.AzE90NvOBlgYp-kKn-jcHdCEDZ0SSHP96zGhVN0TM-k 
+
+{
+    "disabled": true
 }
