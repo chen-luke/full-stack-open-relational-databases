@@ -29,7 +29,19 @@ Blog.init({
     type: DataTypes.INTEGER,
     allowNull: false,
     references: { model: 'users', key: 'id' }
-  }
+  },
+  year: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    validate: {
+      correctYear(value) {
+        if (value === null) return  // allow null
+        if (!(value >= 1991 && value <= new Date().getFullYear())) {
+          throw new Error("Year must at least equal to 1991, but not greater than the current year")
+        }
+      }
+    }
+  },
 }, {
   sequelize,
   underscored: true,
