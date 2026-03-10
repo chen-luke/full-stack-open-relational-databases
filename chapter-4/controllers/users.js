@@ -35,6 +35,7 @@ router.post('/', async (req, res) => {
 router.get('/:id', async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id, {
+      attributes: { exclude: [''] },
       include: [
         {
           model: Note,
@@ -42,6 +43,14 @@ router.get('/:id', async (req, res, next) => {
             exclude: ['userId']
           },
         }, {
+          model: Note,
+          as: 'marked_notes',
+          attributes: { exclude: ['userId'] },
+          through: {
+            attributes: []
+          }
+        },
+        {
           model: Team,
           attributes: ['name', 'id'],
           through: {
