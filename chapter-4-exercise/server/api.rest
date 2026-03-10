@@ -36,10 +36,11 @@ content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RAdGVzdC5jb20iLCJpZCI6MSwiaWF0IjoxNzczMDgzMDQ0fQ.lQEFYygn_CiUWW2cSreT5kRA1s821NHm7YosJfmknok
 
 {
-    "title":"Awesome Story 2",
+    "title":"null story",
     "author":"Lisa C",
     "url":"www.lisa_c.dev/blog",
-    "likes":300
+    "likes":300,
+    "year":null
 }
 
 ###
