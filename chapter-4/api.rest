@@ -31,6 +31,9 @@ content-type: application/json
 # Getting all users
 GET http://localhost:3001/api/users
 
+###
+# Getting user by id
+GET http://localhost:3001/api/users/3
 
 ###
 # Login blocking test, before testing the user should be disabled in the backend
@@ -39,7 +42,7 @@ POST http://localhost:3001/api/login HTTP/1.1
 content-type: application/json
 
 {
-    "username": "Pope-w",
+    "username": "Lisa-j",
     "password": "secret"
 }
 
