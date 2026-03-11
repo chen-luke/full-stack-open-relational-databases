@@ -10,6 +10,7 @@ const usersRouter = require('./controllers/users')
 const loginRouter = require('./controllers/login')
 const authorRouter = require('./controllers/author')
 const resetRouter = require('./controllers/reset')
+const readingListRouter = require('./controllers/readinglists')
 
 const { errorHandler } = require('./middleware/errorHandling')
 const { unknownEndpoint } = require('./middleware/unknownEndpoint')
@@ -25,6 +26,7 @@ app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
 app.use('/api/authors', authorRouter)
 app.use('/api/reset', resetRouter)
+app.use('/api/readinglists', readingListRouter)
 
 app.use(unknownEndpoint)
 
