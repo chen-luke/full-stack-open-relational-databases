@@ -35,3 +35,5 @@ ReadingList.init({
     timestamps: false,
     modelName: 'reading_list'
 })
+
+module.exports = ReadingList
