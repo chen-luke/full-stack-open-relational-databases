@@ -27,4 +27,27 @@ router.post('/', tokenExtractor, async (req, res, next) => {
     }
 })
 
+router.put('/:id', tokenExtractor, async (req, res, next) => {
+    try {
+        if (!req.body) {
+            return res.status(400).json({ error: "payload not found" })
+        }
+        const readingList = await ReadingList.findByPk(req.params.id)
+
+        if (!readingList) {
+            return res.status(404).end()
+        }
+
+        if (readingList.userId !== req.decodedToken.id) {
+            return res.status(401).end()
+        }
+        readingList.read = req.body.read
+        await readingList.save()
+        res.json(readingList)
+
+    } catch (error) {
+        next(error)
+    }
+})
+
 module.exports = router
