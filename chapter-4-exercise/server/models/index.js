@@ -8,6 +8,12 @@ Blog.belongsTo(User)
 User.belongsToMany(Blog, { through: ReadingList, as: 'readings' })
 Blog.belongsToMany(User, { through: ReadingList, as: 'users_reading' })
 
+// super many-to-many allows us to 
+Blog.hasMany(ReadingList, { as: 'readinglists' })
+ReadingList.belongsTo(Blog)
+User.hasMany(ReadingList)
+ReadingList.belongsTo(User)
+
 
 //*--------------------------------------------------------
 // Turrning sync() off since we are using migrations
