@@ -2,6 +2,7 @@ const router = require('express').Router()
 const bcrypt = require('bcrypt')
 
 const { User, Blog, ReadingList } = require('../models')
+const { QueryError } = require('sequelize')
 
 const userFinder = async (req, res, next) => {
   req.user = await User.findByPk(req.params.id)
@@ -45,6 +46,11 @@ router.post('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
 
+  const where = {}
+  if (req.query.read !== undefined) {
+    where.read = req.query.read === 'true'
+  }
+
   try {
     const user = await User.findByPk(req.params.id, {
       include: [
@@ -57,11 +63,12 @@ router.get('/:id', async (req, res, next) => {
             {
               model: ReadingList,
               as: 'readinglists',
-              attributes: ['id', 'read']
+              attributes: ['id', 'read'],
+              where
             }
-          ]
+          ],
         }
-      ]
+      ],
     })
     if (!user) {
       return res.status(404).end()
@@ -73,6 +80,7 @@ router.get('/:id', async (req, res, next) => {
 
 })
 
+
 router.put('/:username', async (req, res) => {
   const user = await User.findOne({ where: { username: req.params.username } })
   if (!user) return res.status(404).end()
@@ -81,5 +89,8 @@ router.put('/:username', async (req, res) => {
   await user.save()
   res.json(user)
 })
+
+
+
 
 module.exports = router
