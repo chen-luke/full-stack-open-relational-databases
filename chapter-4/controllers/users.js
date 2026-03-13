@@ -15,6 +15,9 @@ router.get('/', async (req, res) => {
   // users with the string jami in their name
   const jamiUsers = await User.scope({ method: ['name', '%jami%'] }).findAll()
 
+  // chaining scopes: admins with the string jami in their name
+  const jamiUsersChaining = await User.scope('admin', { method: ['name', '%jami%'] }).findAll()
+
   const users = await User.findAll({
     include: [
       {
