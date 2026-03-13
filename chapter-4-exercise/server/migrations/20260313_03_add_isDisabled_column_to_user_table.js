@@ -9,6 +9,6 @@ module.exports = {
         })
     },
     down: async ({ context: queryInterface }) => {
-        await queryInterface.dropTable('users')
+        await queryInterface.removeColumn('users', 'disabled')
     },
 }
