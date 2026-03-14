@@ -4,7 +4,7 @@ const router = require('express').Router()
 const { SECRET } = require('../util/config')
 const User = require('../models/user')
 const Session = require('../models/session')
-const tokenExtractor = require('../middleware/middleware')
+const { tokenExtractor } = require('../middleware/middleware')
 
 router.post('/', async (request, response) => {
   const { username, password } = request.body
