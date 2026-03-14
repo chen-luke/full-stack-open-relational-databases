@@ -1,6 +1,7 @@
 const Blog = require('./blog')
 const User = require('./user')
 const ReadingList = require('./reading_list')
+const Session = require('./session')
 
 User.hasMany(Blog, { as: 'all_blogs' })
 Blog.belongsTo(User)
@@ -14,7 +15,8 @@ ReadingList.belongsTo(Blog)
 User.hasMany(ReadingList)
 ReadingList.belongsTo(User)
 
-
+User.hasMany(Session, { as: 'token_sessions' })
+Session.belongsTo(User)
 //*--------------------------------------------------------
 // Turrning sync() off since we are using migrations
 
@@ -33,5 +35,5 @@ ReadingList.belongsTo(User)
 // initialize()
 
 module.exports = {
-  Blog, User, ReadingList
+  Blog, User, ReadingList, Session
 }
