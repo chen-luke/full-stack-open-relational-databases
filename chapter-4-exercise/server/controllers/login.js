@@ -4,6 +4,7 @@ const router = require('express').Router()
 const { SECRET } = require('../util/config')
 const User = require('../models/user')
 const Session = require('../models/session')
+const tokenExtractor = require('../middleware/middleware')
 
 router.post('/', async (request, response) => {
   const { username, password } = request.body
@@ -18,7 +19,6 @@ router.post('/', async (request, response) => {
     }
   })
 
-
   const passwordCorrect = user === null ? false : await bcrypt.compare(password, user.passwordHash)
 
   if (!(user && passwordCorrect)) {
@@ -26,7 +26,6 @@ router.post('/', async (request, response) => {
       error: 'invalid username or password'
     })
   }
-
 
   if (user.disabled) {
     return response.status(401).json({ error: 'account disabled, please contact admin' })
@@ -46,6 +45,22 @@ router.post('/', async (request, response) => {
   response
     .status(200)
     .send({ token, username: user.username, name: user.name })
+})
+
+router.delete('/', tokenExtractor, async (req, res, next) => {
+
+  try {
+    const session = await Session.findOne({ where: { token: req.token } })
+    if (!session) {
+      return res.status(401).json({ error: 'session not found' })
+    }
+    await session.destroy()
+
+    res.status(204).end()
+
+  } catch (error) {
+    next(error)
+  }
 })
 
 module.exports = router

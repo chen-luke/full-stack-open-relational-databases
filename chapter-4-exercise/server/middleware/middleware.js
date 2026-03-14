@@ -13,6 +13,7 @@ const tokenExtractor = async (req, res, next) => {
                 return res.status(401).json({ error: 'user login expired please login again' })
             }
             req.decodedToken = jwt.verify(authorization_token, SECRET)
+            req.token = authorization_token
         } catch {
             return res.status(401).json({ error: 'token invalid' })
         }
