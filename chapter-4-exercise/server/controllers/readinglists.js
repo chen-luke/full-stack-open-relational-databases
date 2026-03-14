@@ -7,9 +7,17 @@ router.get('/', async (req, res) => {
     res.status(200).json({ works: true }).end()
 })
 
-router.post('/', tokenExtractor, async (req, res, next) => {
+router.post('/', async (req, res, next) => {
+
     try {
         const { blogId, userId } = req.body
+        if (!blogId) {
+            return res.status(400).json({ error: 'blog id not found' })
+        }
+        if (!userId) {
+            return res.status(400).json({ error: 'user id not found' })
+        }
+
         const blog = await Blog.findByPk(blogId)
         const user = await User.findByPk(userId)
         if (!blog) {
@@ -19,8 +27,17 @@ router.post('/', tokenExtractor, async (req, res, next) => {
             return res.status(404).json({ error: 'user not found' })
         }
 
+        const isAdded = await ReadingList.findOne({ blogId })
+        if (isAdded) {
+            return res.status(400).json({ error: 'blog already exists in readinglist' })
+        }
         const readingList = await ReadingList.create({ ...req.body })
-        res.json(readingList)
+        console.log("---------------------------------------------------------")
+        console.log("---------------------------------------------------------")
+        console.log(readingList)
+        console.log("---------------------------------------------------------")
+        console.log("---------------------------------------------------------")
+        return res.json({ id: readingList.id, blog_id: readingList.blogId, user_id: readingList.userId, read: readingList.read })
 
     } catch (error) {
         next(error)
@@ -43,7 +60,7 @@ router.put('/:id', tokenExtractor, async (req, res, next) => {
         }
         readingList.read = req.body.read
         await readingList.save()
-        res.json(readingList)
+        return res.json(readingList)
 
     } catch (error) {
         next(error)

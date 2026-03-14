@@ -10,7 +10,7 @@ User.belongsToMany(Blog, { through: ReadingList, as: 'readings' })
 Blog.belongsToMany(User, { through: ReadingList, as: 'users_reading' })
 
 // super many-to-many allows us to 
-Blog.hasMany(ReadingList, { as: 'readinglists' })
+Blog.hasMany(ReadingList, { as: 'reading_list' })
 ReadingList.belongsTo(Blog)
 User.hasMany(ReadingList)
 ReadingList.belongsTo(User)
