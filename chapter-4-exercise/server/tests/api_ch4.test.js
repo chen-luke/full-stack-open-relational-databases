@@ -30,7 +30,7 @@ before(async () => {
   createdBlogId = blogResponse.data.id
 })
 
-describe.only('Reading Lists API', () => {
+describe('Reading Lists API', () => {
   it('can add a blog to reading list', async () => {
     const readingListEntry = {
       blogId: createdBlogId,

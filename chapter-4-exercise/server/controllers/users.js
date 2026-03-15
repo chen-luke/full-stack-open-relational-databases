@@ -68,11 +68,6 @@ router.get('/:id', async (req, res, next) => {
       return res.status(404).end()
     }
 
-    console.log('-----------------------------------')
-    console.log('------------   user ---------------')
-    console.log(JSON.stringify(user.toJSON(), null, 2))
-    console.log('-----------------------------------')
-    console.log('-----------------------------------')
     res.json(user)
   } catch (error) {
     next(error)
