@@ -27,16 +27,12 @@ router.post('/', async (req, res, next) => {
             return res.status(404).json({ error: 'user not found' })
         }
 
-        const isAdded = await ReadingList.findOne({ blogId })
+        const isAdded = await ReadingList.findOne({ where: { blogId, userId } })
         if (isAdded) {
             return res.status(400).json({ error: 'blog already exists in readinglist' })
         }
         const readingList = await ReadingList.create({ ...req.body })
-        console.log("---------------------------------------------------------")
-        console.log("---------------------------------------------------------")
-        console.log(readingList)
-        console.log("---------------------------------------------------------")
-        console.log("---------------------------------------------------------")
+
         return res.json({ id: readingList.id, blog_id: readingList.blogId, user_id: readingList.userId, read: readingList.read })
 
     } catch (error) {

@@ -8,7 +8,7 @@ router.delete('/', tokenExtractor, async (req, res, next) => {
         if (!session) {
             return res.status(401).json({ error: 'session not found' })
         }
-        await session.destroy()
+        await Session.destroy({ where: { userId: req.decodedToken.id } })
         res.status(204).end()
     } catch (error) {
         next(error)
